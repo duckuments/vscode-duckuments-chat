@@ -1,36 +1,40 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
+const vscode = require("vscode");
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
+  console.log("duckuments active");
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "duckuments" is now active!');
+  // register provider immediately
+  const provider = new DuckumentsViewProvider(context.extensionUri);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider("duckumentsChatView", provider)
+  );
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('duckuments.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+  // optional command (not needed for sidebar, but you can keep it)
+  const runCmd = vscode.commands.registerCommand("duckuments.run", () => {
+    vscode.window.showInformationMessage("Hello from duckuments!");
+  });
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from duckuments!');
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(runCmd);
 }
 
-// This method is called when your extension is deactivated
+class DuckumentsViewProvider {
+  constructor(extensionUri) {
+    this._extensionUri = extensionUri;
+  }
+
+  resolveWebviewView(webviewView) {
+    webviewView.webview.options = { enableScripts: true };
+    webviewView.webview.html = `
+      <html>
+      <body style="padding:10px;font-family:sans-serif">
+        <h3>Duckuments Chat</h3>
+        <p>This is your sidebar panel.</p>
+      </body>
+      </html>
+    `;
+  }
+}
+
 function deactivate() {}
 
-module.exports = {
-	activate,
-	deactivate
-}
+module.exports = { activate, deactivate };

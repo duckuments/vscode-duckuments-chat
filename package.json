@@ -15,7 +15,7 @@
   "categories": [
     "Programming Languages",
     "Machine Learning",
-    "Other",
+    "Other"
   ],
   "keywords": [
     "documentation",
@@ -24,15 +24,34 @@
     "ollama",
     "copilot",
     "generator",
-    "markdown",
+    "markdown"
   ],
   "activationEvents": [
     "onStartupFinished",
+    "onView:duckumentsChatView"
   ],
   "main": "./extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "duckumentsSideBar",
+          "title": "duckuments",
+          "icon": "./media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "duckumentsSideBar":[
+        {
+          "id": "duckumentsChatView",
+          "name": "Chat",
+          "icon": "./media/icon.svg"
+        }
+      ]
+    },
     "commands": [{
-      "command": "duckuments.helloWorld",
+      "command": "duckuments.run",
       "title": "Run duckuments"
     }]
   },
