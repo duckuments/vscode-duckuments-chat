@@ -14,7 +14,18 @@ function activate(context) {
     vscode.window.showInformationMessage("Hello from duckuments!");
   });
 
+  const openChatCmd = vscode.commands.registerCommand(
+    "duckuments.openChat",
+    openChat
+  );
+
   context.subscriptions.push(runCmd);
+  context.subscriptions.push(openChatCmd);
+}
+
+function openChat() {
+  console.log("open chat run");
+  vscode.commands.executeCommand("workbench.view.extension.duckumentsSideBar");
 }
 
 class DuckumentsViewProvider {

@@ -53,7 +53,12 @@
     "commands": [{
       "command": "duckuments.run",
       "title": "Run duckuments"
-    }]
+    },
+    {
+      "command": "duckuments.openChat",
+      "title": "Duckuments : open Chat"
+    }
+  ]
   },
   "scripts": {
     "lint": "eslint .",
